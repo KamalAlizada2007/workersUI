@@ -16,9 +16,12 @@ export class WorkersComponent implements OnInit {
 
   salaryFilter: number | null = null;
   experienceFilter: number | null = null;
-  ageFilter: number | null = null;  
+  ageFilter: number | null = null;
 
   editingIndex: number | null = null;
+
+    validationErrors: string[] = [];  
+
 
   constructor(private workerService: WorkerService) {}
 
@@ -35,31 +38,70 @@ export class WorkersComponent implements OnInit {
 
   editWorker(index: number): void {
     this.editingIndex = index;
+    this.originalWorker = { ...this.filteredWorkers[index] };
+      this.validationErrors = [];
   }
 
   saveWorker(index: number): void {
-    this.editingIndex = null;
-    
-    let worker = this.filteredWorkers[index];
+  this.validationErrors = [];
+
+  let worker = this.filteredWorkers[index];
+
+  if (!worker.name || worker.name.trim() === '') {
+    this.validationErrors.push('Name is required.');
+  }
+  if (!worker.surname || worker.surname.trim() === '') {
+    this.validationErrors.push('Surname is required.');
+  }
+  if (worker.salary == null || worker.salary <= 0) {
+    this.validationErrors.push('Salary must be greater than zero.');
+  }
+  if (worker.workExperienceYears == null || worker.workExperienceYears < 0) {
+    this.validationErrors.push('Experience must be zero or greater.');
+  }
+
+  if (this.validationErrors.length > 0) {
+    return;
+  }
+
+  this.editingIndex = null;
+
+  if (worker.id) {
     this.workerService.update(worker).subscribe(() => {
       this.loadWorkers();
     });
+  } else {
+    this.workerService.add(worker).subscribe(() => {
+      this.loadWorkers();
+    });
+  }
+}
+
+
+  cancelEdit(index: number): void {
+  this.editingIndex = null;
+
+  if (this.originalWorker) {
+    this.filteredWorkers[index] = this.originalWorker;
+    this.originalWorker = null;
   }
 
-  cancelEdit(): void {
-    this.editingIndex = null;
+  if (!this.filteredWorkers[index].id) {
+    this.filteredWorkers.splice(index, 1);
+    this.workers = [...this.filteredWorkers];
   }
+
+  this.validationErrors = [];
+}
 
   deleteWorker(worker: any): void {
     if (!confirm(`Delete ${worker.name} ${worker.surname}?`)) return;
-    
+
     this.workerService.delete(worker.id).subscribe(() => {
       this.loadWorkers();
     });
-
   }
 
-  // Yardımçı funksiya: Doğum tarixindən yaş hesabla
   calculateAge(dateOfBirth: string): number {
     const dob = new Date(dateOfBirth);
     const diffMs = Date.now() - dob.getTime();
@@ -82,4 +124,39 @@ export class WorkersComponent implements OnInit {
     this.ageFilter = null;
     this.filteredWorkers = [...this.workers];
   }
+
+  formatDateForInput(dateString: string): string {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  
+ addWorker(): void {
+  if (this.editingIndex !== null) {
+    this.validationErrors = ['Please save or cancel the current editing worker first.'];
+    return;
+  }
+
+  const newWorker = {
+    name: '',
+    surname: '',
+    salary: 0,
+    workExperienceYears: 0,
+    dateOfBirth: new Date().toISOString().substring(0, 10)
+  };
+
+  this.validationErrors = [];
+  this.workers.unshift(newWorker);
+  this.filteredWorkers = [...this.workers];
+  this.editingIndex = 0;
+}
+
+clearValidationErrors(): void {
+  this.validationErrors = [];
+}
+
+private originalWorker: any = null;
 }

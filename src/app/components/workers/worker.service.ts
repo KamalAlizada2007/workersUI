@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Worker {
-  id: number;
+  id?: number;
   name: string;
   surname: string;
   salary: number;
@@ -42,4 +42,3 @@ export class WorkerService {
     return this.http.delete<void>(`${this.apiUrl}?id=${id}`);
   }
 }
-

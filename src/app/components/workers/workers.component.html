@@ -1,6 +1,16 @@
 <h2>Workers List</h2>
 
-<div class="filter-container">
+<div *ngIf="validationErrors.length > 0" class="error-overlay">
+  <div class="error-box">
+    <h3>Validation Errors</h3>
+    <ul>
+      <li *ngFor="let error of validationErrors">{{ error }}</li>
+    </ul>
+    <button (click)="clearValidationErrors()" class="btn close-btn">Close</button>
+  </div>
+</div>
+
+<div class="filter-container" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
   <label> Salary:
     <input type="number" [(ngModel)]="salaryFilter" (input)="applyFilters()" />
   </label>
@@ -10,9 +20,11 @@
   <label> Age:
     <input type="number" [(ngModel)]="ageFilter" (input)="applyFilters()" />
   </label>
-  <button (click)="resetFilters()" class="btn reset">
-    ♻️ Reset Filters
-  </button>
+  <button (click)="resetFilters()" class="btn reset">♻️ Reset Filters</button>
+
+  <div style="margin-left: auto;">
+    <button (click)="addWorker()" class="btn add">➕ Add Worker</button>
+  </div>
 </div>
 
 <table class="worker-table">
@@ -52,23 +64,20 @@
       </td>
 
       <td>
-        <input *ngIf="editingIndex === i" type="date" [(ngModel)]="worker.dateOfBirth" />
+        <input
+          *ngIf="editingIndex === i"
+          type="date"
+          [ngModel]="formatDateForInput(worker.dateOfBirth)"
+          (ngModelChange)="worker.dateOfBirth = $event"
+        />
         <span *ngIf="editingIndex !== i">{{ worker.dateOfBirth | date:'dd.MM.yyyy' }}</span>
       </td>
 
       <td>
-        <button *ngIf="editingIndex !== i" (click)="editWorker(i)" class="btn edit">
-          ✏️ Edit
-        </button>
-        <button *ngIf="editingIndex === i" (click)="saveWorker(i)" class="btn save">
-          💾 Save
-        </button>
-        <button *ngIf="editingIndex === i" (click)="cancelEdit()" class="btn save">
-          Cancel
-        </button>
-        <button (click)="deleteWorker(worker)" class="btn delete">
-          🗑️ Delete
-        </button>
+        <button *ngIf="editingIndex !== i" (click)="editWorker(i)" class="btn edit">✏️</button>
+        <button *ngIf="editingIndex === i" (click)="saveWorker(i)" class="btn save">💾</button>
+        <button *ngIf="editingIndex === i" (click)="cancelEdit(i)" class="btn cancel">❌</button>
+        <button (click)="deleteWorker(worker)" class="btn delete">🗑️</button>
       </td>
     </tr>
   </tbody>
