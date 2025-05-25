@@ -1,0 +1,150 @@
+.worker-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.worker-table th,
+.worker-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.worker-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.worker-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.worker-table tr:hover {
+  background-color: #eef;
+}
+
+/* Düymələrin ümumi stili */
+.btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  margin-right: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Edit düyməsi - yaşıl fon */
+.btn.edit {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn.edit:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.btn.edit:active {
+  transform: scale(0.98);
+}
+
+/* Save düyməsi - oxşar yaşıl fon */
+.btn.save {
+  background-color: #4CAF50;
+  color: white;
+  padding: 6px 12px;
+}
+
+.btn.save:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.btn.save:active {
+  transform: scale(0.98);
+}
+
+/* Delete düyməsi - qırmızı fon */
+.btn.delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn.delete:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+}
+
+.btn.delete:active {
+  transform: scale(0.98);
+}
+
+/* Filter konteyneri */
+.worker-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  background-color: #f9f9f9;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.worker-filter-container label {
+  font-weight: 600;
+  color: #444;
+  margin-right: 6px;
+  white-space: nowrap;
+}
+
+.worker-filter-container input[type="number"],
+.worker-filter-container input[type="date"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-width: 140px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.worker-filter-container input[type="number"]:focus,
+.worker-filter-container input[type="date"]:focus {
+  border-color: #3f51b5;
+  outline: none;
+  box-shadow: 0 0 5px #3f51b5;
+}
+
+/* Reset düyməsi */
+.worker-filter-container button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.worker-filter-container button:hover {
+  background-color: #2c387e;
+  transform: scale(1.05);
+}
+
+.worker-filter-container button:active {
+  transform: scale(0.98);
+}
