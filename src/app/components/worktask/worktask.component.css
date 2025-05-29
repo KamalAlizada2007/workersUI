@@ -1,0 +1,150 @@
+h2 {
+  margin-bottom: 10px;
+}
+
+.filter-container {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-container label {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  margin: 5px;
+  transition: transform 0.2s ease-in-out;
+
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+
+.btn.add {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.edit {
+  background-color: #2196f3;
+  color: white;
+}
+
+.btn.save {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn.delete {
+  background-color: #e91e63;
+  color: white;
+}
+
+.btn.select {
+  background-color: #ff9800;
+  color: white;
+}
+
+.task-table, .worker-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.task-table th, .task-table td,
+.worker-table th, .worker-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.task-table th, .worker-table th {
+  background-color: #f2f2f2;
+}
+
+.error-overlay {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 230, 230, 0.95);
+  padding: 15px 25px;
+  border: 1px solid #f44336;
+  border-radius: 5px;
+  z-index: 1000;
+  max-width: 400px;
+}
+
+.error-box h3 {
+  margin-top: 0;
+  color: #f44336;
+}
+
+.error-box ul {
+  padding-left: 20px;
+  margin: 10px 0;
+  color: #b71c1c;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 600px;
+}
+
+.modal h3 {
+  margin-top: 0;
+}
+
+.btn.close-btn {
+  margin-top: 15px;
+  background-color: #757575;
+  color: white;
+  padding: 5px;
+}
+
+.btn.choose-worker {
+  background-color: #4caf50; /* yaşıl */
+  color: white;
+  margin-left: 5px;
+  padding: 5px 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn.choose-worker:hover {
+  background-color: #45a049;
+}

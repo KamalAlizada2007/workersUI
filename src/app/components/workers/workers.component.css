@@ -26,7 +26,6 @@
   background-color: #eef;
 }
 
-
 .btn {
   padding: 6px 10px;
   border: none;
@@ -41,7 +40,6 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-
 .btn.edit {
   background-color: #4CAF50;
   color: white;
@@ -55,7 +53,6 @@
 .btn.edit:active {
   transform: scale(0.98);
 }
-
 
 .btn.save {
   background-color: #4CAF50;
@@ -72,7 +69,6 @@
   transform: scale(0.98);
 }
 
-
 .btn.delete {
   background-color: #f44336;
   color: white;
@@ -87,28 +83,25 @@
   transform: scale(0.98);
 }
 
+.filter-add-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px; 
+  flex-wrap: wrap;
+   margin-top: 20px 
+}
 
-.worker-filter-container {
+.filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  background-color: #f9f9f9;
-  padding: 15px 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
+  gap: 12px;
   align-items: center;
+  flex-grow: 1; 
 }
 
-.worker-filter-container label {
-  font-weight: 600;
-  color: #444;
-  margin-right: 6px;
-  white-space: nowrap;
-}
-
-.worker-filter-container input[type="number"],
-.worker-filter-container input[type="date"] {
+.filters input[type="number"] {
   padding: 6px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -117,15 +110,13 @@
   transition: border-color 0.3s ease;
 }
 
-.worker-filter-container input[type="number"]:focus,
-.worker-filter-container input[type="date"]:focus {
+.filters input[type="number"]:focus {
   border-color: #3f51b5;
   outline: none;
   box-shadow: 0 0 5px #3f51b5;
 }
 
-
-.worker-filter-container button {
+.filters button {
   background-color: #3f51b5;
   color: white;
   border: none;
@@ -140,14 +131,52 @@
   gap: 6px;
 }
 
-.worker-filter-container button:hover {
+.filters button:hover {
   background-color: #2c387e;
   transform: scale(1.05);
 }
 
-.worker-filter-container button:active {
+.filters button:active {
   transform: scale(0.98);
 }
+
+.filters-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.filter-label {
+  font-weight: 700;
+  font-size: 16px;
+  color: #3f51b5;
+  white-space: nowrap;
+}
+
+
+.btn.add {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  flex-shrink: 0; 
+}
+
+.btn.add:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.btn.add:active {
+  transform: scale(0.98);
+}
+
+
 
 input.custom-date-input {
   appearance: none;
@@ -167,6 +196,7 @@ input.custom-date-input::-webkit-calendar-picker-indicator {
   filter: invert(0.4);
   cursor: pointer;
 }
+
 .hidden-date-input {
   position: absolute;
   left: 0;
@@ -236,4 +266,3 @@ input.custom-date-input::-webkit-calendar-picker-indicator {
 .close-btn:hover {
   background-color: #7a000f;
 }
-

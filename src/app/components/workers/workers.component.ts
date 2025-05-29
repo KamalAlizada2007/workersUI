@@ -19,9 +19,11 @@ export class WorkersComponent implements OnInit {
   ageFilter: number | null = null;
 
   editingIndex: number | null = null;
+  validationErrors: string[] = [];
 
-    validationErrors: string[] = [];  
-
+  showWorkerSelector: boolean = false;
+  selectedTaskIndex: number | null = null;  
+  private originalWorker: any = null;
 
   constructor(private workerService: WorkerService) {}
 
@@ -39,60 +41,59 @@ export class WorkersComponent implements OnInit {
   editWorker(index: number): void {
     this.editingIndex = index;
     this.originalWorker = { ...this.filteredWorkers[index] };
-      this.validationErrors = [];
+    this.validationErrors = [];
   }
 
   saveWorker(index: number): void {
-  this.validationErrors = [];
+    this.validationErrors = [];
 
-  let worker = this.filteredWorkers[index];
+    let worker = this.filteredWorkers[index];
 
-  if (!worker.name || worker.name.trim() === '') {
-    this.validationErrors.push('Name is required.');
-  }
-  if (!worker.surname || worker.surname.trim() === '') {
-    this.validationErrors.push('Surname is required.');
-  }
-  if (worker.salary == null || worker.salary <= 0) {
-    this.validationErrors.push('Salary must be greater than zero.');
-  }
-  if (worker.workExperienceYears == null || worker.workExperienceYears < 0) {
-    this.validationErrors.push('Experience must be zero or greater.');
-  }
+    if (!worker.name || worker.name.trim() === '') {
+      this.validationErrors.push('Name is required.');
+    }
+    if (!worker.surname || worker.surname.trim() === '') {
+      this.validationErrors.push('Surname is required.');
+    }
+    if (worker.salary == null || worker.salary <= 0) {
+      this.validationErrors.push('Salary must be greater than zero.');
+    }
+    if (worker.workExperienceYears == null || worker.workExperienceYears < 0) {
+      this.validationErrors.push('Experience must be zero or greater.');
+    }
 
-  if (this.validationErrors.length > 0) {
-    return;
+    if (this.validationErrors.length > 0) {
+      return;
+    }
+
+    this.editingIndex = null;
+
+    if (worker.id) {
+      this.workerService.update(worker).subscribe(() => {
+        this.loadWorkers();
+      });
+    } else {
+      this.workerService.add(worker).subscribe(() => {
+        this.loadWorkers();
+      });
+    }
   }
-
-  this.editingIndex = null;
-
-  if (worker.id) {
-    this.workerService.update(worker).subscribe(() => {
-      this.loadWorkers();
-    });
-  } else {
-    this.workerService.add(worker).subscribe(() => {
-      this.loadWorkers();
-    });
-  }
-}
-
 
   cancelEdit(index: number): void {
-  this.editingIndex = null;
+    this.editingIndex = null;
 
-  if (this.originalWorker) {
-    this.filteredWorkers[index] = this.originalWorker;
-    this.originalWorker = null;
+    if (this.originalWorker) {
+      this.filteredWorkers[index] = this.originalWorker;
+      this.originalWorker = null;
+    }
+
+    if (!this.filteredWorkers[index].id) {
+      this.filteredWorkers.splice(index, 1);
+      this.workers = [...this.filteredWorkers];
+    }
+
+    this.validationErrors = [];
   }
-
-  if (!this.filteredWorkers[index].id) {
-    this.filteredWorkers.splice(index, 1);
-    this.workers = [...this.filteredWorkers];
-  }
-
-  this.validationErrors = [];
-}
 
   deleteWorker(worker: any): void {
     if (!confirm(`Delete ${worker.name} ${worker.surname}?`)) return;
@@ -133,30 +134,43 @@ export class WorkersComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  
- addWorker(): void {
-  if (this.editingIndex !== null) {
-    this.validationErrors = ['Please save or cancel the current editing worker first.'];
-    return;
+  addWorker(): void {
+    if (this.editingIndex !== null) {
+      this.validationErrors = ['Please save or cancel the current editing worker first.'];
+      return;
+    }
+
+    const newWorker = {
+      name: '',
+      surname: '',
+      salary: 0,
+      workExperienceYears: 0,
+      dateOfBirth: new Date().toISOString().substring(0, 10)
+    };
+
+    this.validationErrors = [];
+    this.workers.unshift(newWorker);
+    this.filteredWorkers = [...this.workers];
+    this.editingIndex = 0;
   }
 
-  const newWorker = {
-    name: '',
-    surname: '',
-    salary: 0,
-    workExperienceYears: 0,
-    dateOfBirth: new Date().toISOString().substring(0, 10)
-  };
+  clearValidationErrors(): void {
+    this.validationErrors = [];
+  }
 
-  this.validationErrors = [];
-  this.workers.unshift(newWorker);
-  this.filteredWorkers = [...this.workers];
-  this.editingIndex = 0;
-}
+  openWorkerSelector(taskIndex: number | null = null): void {
+    this.showWorkerSelector = true;
+    this.selectedTaskIndex = taskIndex;
+  }
 
-clearValidationErrors(): void {
-  this.validationErrors = [];
-}
+  closeWorkerSelector(): void {
+    this.showWorkerSelector = false;
+    this.selectedTaskIndex = null;
+  }
 
-private originalWorker: any = null;
+  assignWorker(worker: any): void {
+    if (this.selectedTaskIndex !== null) {
+      this.closeWorkerSelector();
+    }
+  }
 }

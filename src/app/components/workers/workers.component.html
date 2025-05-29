@@ -1,84 +1,104 @@
-<h2>Workers List</h2>
-
-<div *ngIf="validationErrors.length > 0" class="error-overlay">
-  <div class="error-box">
-    <h3>Validation Errors</h3>
-    <ul>
-      <li *ngFor="let error of validationErrors">{{ error }}</li>
-    </ul>
-    <button (click)="clearValidationErrors()" class="btn close-btn">Close</button>
+<div class="filter-add-container">
+  <div class="filters-wrapper">
+    <span class="filter-label">Filter:</span>
+    <div class="filters">
+      <input type="number" [(ngModel)]="salaryFilter" placeholder="Min Salary" />
+      <input type="number" [(ngModel)]="experienceFilter" placeholder="Min Experience" />
+      <input type="number" [(ngModel)]="ageFilter" placeholder="Min Age" />
+      <button (click)="applyFilters()">Apply Filters</button>
+      <button (click)="resetFilters()">Reset Filters</button>
+    </div>
   </div>
+  <button (click)="addWorker()" class="btn add">Add Worker</button>
 </div>
 
-<div class="filter-container" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-  <label> Salary:
-    <input type="number" [(ngModel)]="salaryFilter" (input)="applyFilters()" />
-  </label>
-  <label> Experience:
-    <input type="number" [(ngModel)]="experienceFilter" (input)="applyFilters()" />
-  </label>
-  <label> Age:
-    <input type="number" [(ngModel)]="ageFilter" (input)="applyFilters()" />
-  </label>
-  <button (click)="resetFilters()" class="btn reset">♻️ Reset Filters</button>
 
-  <div style="margin-left: auto;">
-    <button (click)="addWorker()" class="btn add">➕ Add Worker</button>
-  </div>
-</div>
 
 <table class="worker-table">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Name</th>
       <th>Surname</th>
       <th>Salary</th>
-      <th>Experience (Years)</th>
+      <th>Experience (years)</th>
       <th>Date of Birth</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let worker of filteredWorkers; let i = index">
-      <td>{{ worker.id }}</td>
-
-      <td>
-        <input *ngIf="editingIndex === i" [(ngModel)]="worker.name" />
-        <span *ngIf="editingIndex !== i">{{ worker.name }}</span>
+      <td *ngIf="editingIndex !== i">{{ worker.name }}</td>
+      <td *ngIf="editingIndex === i">
+        <input [(ngModel)]="filteredWorkers[i].name" />
       </td>
 
-      <td>
-        <input *ngIf="editingIndex === i" [(ngModel)]="worker.surname" />
-        <span *ngIf="editingIndex !== i">{{ worker.surname }}</span>
+      <td *ngIf="editingIndex !== i">{{ worker.surname }}</td>
+      <td *ngIf="editingIndex === i">
+        <input [(ngModel)]="filteredWorkers[i].surname" />
       </td>
 
-      <td>
-        <input *ngIf="editingIndex === i" type="number" [(ngModel)]="worker.salary" />
-        <span *ngIf="editingIndex !== i">{{ worker.salary | currency:'USD' }}</span>
+      <td *ngIf="editingIndex !== i">{{ worker.salary }}</td>
+      <td *ngIf="editingIndex === i">
+        <input type="number" [(ngModel)]="filteredWorkers[i].salary" />
       </td>
 
-      <td>
-        <input *ngIf="editingIndex === i" type="number" [(ngModel)]="worker.workExperienceYears" />
-        <span *ngIf="editingIndex !== i">{{ worker.workExperienceYears }}</span>
+      <td *ngIf="editingIndex !== i">{{ worker.workExperienceYears }}</td>
+      <td *ngIf="editingIndex === i">
+        <input type="number" [(ngModel)]="filteredWorkers[i].workExperienceYears" />
       </td>
 
-      <td>
-        <input
-          *ngIf="editingIndex === i"
-          type="date"
-          [ngModel]="formatDateForInput(worker.dateOfBirth)"
-          (ngModelChange)="worker.dateOfBirth = $event"
-        />
-        <span *ngIf="editingIndex !== i">{{ worker.dateOfBirth | date:'dd.MM.yyyy' }}</span>
+      <td *ngIf="editingIndex !== i">{{ worker.dateOfBirth | date:'yyyy-MM-dd' }}</td>
+      <td *ngIf="editingIndex === i">
+        <input type="date" [(ngModel)]="filteredWorkers[i].dateOfBirth" />
       </td>
 
-      <td>
-        <button *ngIf="editingIndex !== i" (click)="editWorker(i)" class="btn edit">✏️</button>
-        <button *ngIf="editingIndex === i" (click)="saveWorker(i)" class="btn save">💾</button>
-        <button *ngIf="editingIndex === i" (click)="cancelEdit(i)" class="btn cancel">❌</button>
-        <button (click)="deleteWorker(worker)" class="btn delete">🗑️</button>
+      <td *ngIf="editingIndex !== i">
+        <button class="btn edit" (click)="editWorker(i)">Edit</button>
+        <button class="btn delete" (click)="deleteWorker(worker)">Delete</button>
+      </td>
+      <td *ngIf="editingIndex === i">
+        <button class="btn save" (click)="saveWorker(i)">Save</button>
+        <button class="btn cancel" (click)="cancelEdit(i)">Cancel</button>
       </td>
     </tr>
   </tbody>
 </table>
+
+
+
+
+<div *ngIf="validationErrors.length > 0" class="validation-errors">
+  <ul>
+    <li *ngFor="let error of validationErrors">{{ error }}</li>
+  </ul>
+</div>
+
+<!-- Modal işçi seçimi (məsələn, başqa task üçün istifadə olunur) -->
+<div *ngIf="showWorkerSelector" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Select a Worker</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Date of Birth</th>
+          <th>Age</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let worker of workers">
+          <td>{{ worker.name }}</td>
+          <td>{{ worker.surname }}</td>
+          <td>{{ worker.dateOfBirth | date:'yyyy-MM-dd' }}</td>
+          <td>{{ calculateAge(worker.dateOfBirth) }}</td>
+          <td>
+            <button class="btn select" (click)="assignWorker(worker)">Select</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn cancel" (click)="closeWorkerSelector()">Cancel</button>
+  </div>
+</div>

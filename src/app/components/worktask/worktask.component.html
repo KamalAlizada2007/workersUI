@@ -1,0 +1,94 @@
+<h2>Work Tasks</h2>
+
+<div *ngIf="validationErrors.length > 0" class="error-overlay">
+  <div class="error-box">
+    <h3>Validation Errors</h3>
+    <ul>
+      <li *ngFor="let error of validationErrors">{{ error }}</li>
+    </ul>
+    <button (click)="clearValidationErrors()" class="btn close-btn">Close</button>
+  </div>
+</div>
+
+<div class="filter-container">
+  <label>
+    🔍 Search:
+    <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" />
+  </label>
+  <button (click)="addTask()" class="btn add">➕ Add Task</button>
+</div>
+
+<table class="task-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Assigned Worker</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of worktasks; let i = index">
+      <td>{{ task.id }}</td>
+
+      <td>
+        <input *ngIf="editingIndex === i" [(ngModel)]="task.name" />
+        <span *ngIf="editingIndex !== i">{{ task.name }}</span>
+      </td>
+
+      <td>
+        <input *ngIf="editingIndex === i" [(ngModel)]="task.description" />
+        <span *ngIf="editingIndex !== i">{{ task.description }}</span>
+      </td>
+
+      <td>
+        <span *ngIf="editingIndex !== i">{{ getWorkerFullName(task.workerId) }}</span>
+        <button *ngIf="editingIndex === i" (click)="selectWorkerForTask(i)" class="btn select">
+          Select Worker
+        </button>
+      </td>
+
+      <td>
+        <button *ngIf="editingIndex !== i" (click)="editTask(i)" class="btn edit">✏️Edit</button>
+        <button *ngIf="editingIndex === i" (click)="saveTask(i)" class="btn save">💾Save</button>
+        <button *ngIf="editingIndex === i" (click)="cancelEdit(i)" class="btn cancel">❌Cancel</button>
+        <button (click)="deleteTask(task)" class="btn delete">🗑️Delete</button>
+        <!-- Yeni "Choose Worker" düyməsi -->
+        <button (click)="selectWorkerForTask(i)" class="btn choose-worker">Choose Worker</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Worker Selection Modal -->
+<div *ngIf="showWorkerSelector" class="modal-overlay">
+  <div class="modal">
+    <h3>Select Worker</h3>
+    <table class="worker-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Salary</th>
+          <th>Experience</th>
+          <th>Age</th>
+          <th>Select</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let worker of workers">
+          <td>{{ worker.name }}</td>
+          <td>{{ worker.surname }}</td>
+          <td>{{worker.salary}}</td>
+          <td>{{worker.workExperienceYears}}</td>
+          <td>{{ calculateAge(worker.dateOfBirth) ?? 'N/A' }}</td>
+          <td>
+            <button (click)="assignWorker(worker)" class="btn select">Select</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="closeWorkerSelector()" class="btn close-btn">Close</button>
+  </div>
+</div>
