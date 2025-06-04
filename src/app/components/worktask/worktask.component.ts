@@ -19,6 +19,7 @@ export class WorktaskComponent implements OnInit {
   editingIndex: number | null = null;
   validationErrors: string[] = [];
   searchTerm: string = '';
+  workerId: number | null=null;
 
   showWorkerSelector: boolean = false;
   selectedTaskIndex: number | null = null;
@@ -121,6 +122,9 @@ export class WorktaskComponent implements OnInit {
 
   assignWorker(worker: Worker): void {
     if (this.selectedTaskIndex !== null) {
+
+    this.worktasks[this.selectedTaskIndex].workerId = worker.id ?? null;
+    this.saveTask(this.selectedTaskIndex);
 
       
       
