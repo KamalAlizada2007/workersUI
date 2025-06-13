@@ -9,6 +9,7 @@ export interface Worker {
   salary: number;
   workExperienceYears: number;
   dateOfBirth: string;  
+  workerCode?: string;
 }
 
 

@@ -1,3 +1,7 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -12,13 +16,14 @@ import { FormsModule } from '@angular/forms';
 
 import { WorktaskComponent } from './components/worktask/worktask.component';
 import { WorkersComponent } from './components/workers/workers.component';
+import { UsersComponent } from './components/users/users.component';
+import { MyTasksComponent } from './components/mytasks/mytasks.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -26,9 +31,14 @@ import { WorkersComponent } from './components/workers/workers.component';
     HttpClientModule,
     FormsModule,
     WorktaskComponent,    
-    WorkersComponent     
+    WorkersComponent,
+    UsersComponent,
+    MyTasksComponent
   ],
-  providers: [],
+  providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

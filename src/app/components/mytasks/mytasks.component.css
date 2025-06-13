@@ -1,0 +1,68 @@
+.task-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* space between cards */
+  justify-content: flex-start;
+}
+
+.task-card {
+  flex: 1 1 calc(20% - 15px); /* 5 cards per row with some gap */
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+  min-width: 180px; /* prevent cards from getting too narrow */
+  max-width: 20%;
+}
+
+.task-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Keep other styles the same */
+.task-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.task-card p {
+  margin: 0 0 12px 0;
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.task-card button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.task-card button:hover {
+  background-color: #0056b3;
+}
+
+p {
+  color: #999;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.header {
+  text-align: center;
+  font-size: 31px;
+}
+
+.container {
+  margin: 5px 50px;
+}

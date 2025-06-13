@@ -61,6 +61,9 @@ export class WorkersComponent implements OnInit {
     if (worker.workExperienceYears == null || worker.workExperienceYears < 0) {
       this.validationErrors.push('Experience must be zero or greater.');
     }
+    if (worker.workerCode && typeof worker.workerCode !== 'string') {
+      this.validationErrors.push('Invalid worker code.');
+    }
 
     if (this.validationErrors.length > 0) {
       return;
@@ -145,7 +148,8 @@ export class WorkersComponent implements OnInit {
       surname: '',
       salary: 0,
       workExperienceYears: 0,
-      dateOfBirth: new Date().toISOString().substring(0, 10)
+      dateOfBirth: new Date().toISOString().substring(0, 10),
+      workerCode: null
     };
 
     this.validationErrors = [];

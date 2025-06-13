@@ -12,8 +12,6 @@
   <button (click)="addWorker()" class="btn add">Add Worker</button>
 </div>
 
-
-
 <table class="worker-table">
   <thead>
     <tr>
@@ -22,6 +20,7 @@
       <th>Salary</th>
       <th>Experience (years)</th>
       <th>Date of Birth</th>
+      <th>Worker Code</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -52,6 +51,11 @@
         <input type="date" [(ngModel)]="filteredWorkers[i].dateOfBirth" />
       </td>
 
+      <td *ngIf="editingIndex !== i">{{ worker.workerCode }}</td>
+      <td *ngIf="editingIndex === i">
+        <input [value]="worker.workerCode" disabled />
+      </td>
+
       <td *ngIf="editingIndex !== i">
         <button class="btn edit" (click)="editWorker(i)">Edit</button>
         <button class="btn delete" (click)="deleteWorker(worker)">Delete</button>
@@ -64,41 +68,8 @@
   </tbody>
 </table>
 
-
-
-
 <div *ngIf="validationErrors.length > 0" class="validation-errors">
   <ul>
     <li *ngFor="let error of validationErrors">{{ error }}</li>
   </ul>
-</div>
-
-<!-- Modal işçi seçimi (məsələn, başqa task üçün istifadə olunur) -->
-<div *ngIf="showWorkerSelector" class="modal-overlay">
-  <div class="modal-content">
-    <h3>Select a Worker</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Surname</th>
-          <th>Date of Birth</th>
-          <th>Age</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let worker of workers">
-          <td>{{ worker.name }}</td>
-          <td>{{ worker.surname }}</td>
-          <td>{{ worker.dateOfBirth | date:'yyyy-MM-dd' }}</td>
-          <td>{{ calculateAge(worker.dateOfBirth) }}</td>
-          <td>
-            <button class="btn select" (click)="assignWorker(worker)">Select</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <button class="btn cancel" (click)="closeWorkerSelector()">Cancel</button>
-  </div>
 </div>

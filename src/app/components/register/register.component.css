@@ -1,0 +1,22 @@
+.register-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.error-message {
+  margin-top: 10px;
+  color: red;
+}
+
+.success-message {
+  margin-top: 10px;
+  color: green;
+}

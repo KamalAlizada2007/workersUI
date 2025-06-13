@@ -1,0 +1,17 @@
+<div class="header">
+    <h3>Let's do it!</h3>
+</div>
+
+<div class="container">
+    <div *ngIf="tasks.length === 0">
+    <p>There are no tasks to do.</p>
+    </div>
+
+    <div class="task-list">
+    <div *ngFor="let task of tasks" class="task-card">
+        <h3>{{ task.name }}</h3>
+        <p>{{ task.description }}</p>
+        <button (click)="onAction(task)">Start</button>
+    </div>
+    </div>
+</div>

@@ -6,10 +6,7 @@ export interface WorkTask {
   id: number;
   name: string;
   description: string;
-  workerId: number | null; 
-  dateOfBirth? : string | null;
-
-  
+  workerId: number | null;  
 }
 
 @Injectable({
@@ -38,5 +35,9 @@ export class WorkTaskService {
 
   deleteWorkTask(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}?id=${id}`);
+  }
+
+  getTasksByWorkerCode(): Observable<WorkTask[]>{
+    return this.http.get<WorkTask[]>(`${this.apiUrl}get-mytask`);
   }
 }

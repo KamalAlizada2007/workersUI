@@ -1,0 +1,40 @@
+<div class="register-container">
+  <h2>İstifadəçi Qeydiyyatı</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <!-- Worker Code -->
+    <div>
+      <label for="workerCode">İşçi Kodu:</label>
+      <input id="workerCode" type="text" formControlName="workerCode" />
+      <div *ngIf="registerForm.get('workerCode')?.invalid && registerForm.get('workerCode')?.touched" class="error">
+        İşçi kodu tələb olunur.
+      </div>
+    </div>
+
+    <!-- Username -->
+    <div>
+      <label for="username">İstifadəçi Adı:</label>
+      <input id="username" type="text" formControlName="username" />
+      <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error">
+        İstifadəçi adı tələb olunur.
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div>
+      <label for="password">Şifrə:</label>
+      <input id="password" type="password" formControlName="password" />
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error">
+        Şifrə tələb olunur və ən azı 6 simvol olmalıdır.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="registerForm.invalid">Qeydiyyatdan keç</button>
+    <button type="button" (click)="navigateToLogin()">Back to login</button>
+
+    <!-- Messages -->
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+  </form>
+</div>

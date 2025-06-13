@@ -1,8 +1,19 @@
-<nav class="navbar">
-  <ul class="nav-links">
-    <li><a routerLink="/">Home</a></li>
-    <li><a routerLink="/workers">Worker List</a></li>
-    <li><a routerLink="/worktasks">Worktasks</a></li>
-  </ul>
-</nav>
+<nav *ngIf="isLoggedIn$ | async" class="navbar">
+  <a routerLink="/dashboard">Home</a>
 
+  <ng-container *ngIf="(userRole$ | async)?.toLowerCase() === 'admin';">
+    <a routerLink="/workers">Workers</a>
+    <a routerLink="/worktasks">Worktasks</a>
+    <a routerLink="/users">Users</a>
+  </ng-container>
+
+  <ng-container *ngIf="(userRole$ | async)?.toLowerCase() === 'worker'">
+    <a routerLink="/mytasks">Tasks</a>
+  </ng-container>
+
+  <button (click)="logout()">Logout</button>
+
+  <span *ngIf="userRole$ | async as role" class="role-info">
+    You are logged in as: <strong>{{ role }}</strong>
+  </span>
+</nav>
