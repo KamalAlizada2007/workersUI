@@ -23,7 +23,7 @@ import { MyTasksComponent } from './components/mytasks/mytasks.component';
   declarations: [
     AppComponent,
     NavbarComponent,
-    HomeComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -33,7 +33,8 @@ import { MyTasksComponent } from './components/mytasks/mytasks.component';
     WorktaskComponent,    
     WorkersComponent,
     UsersComponent,
-    MyTasksComponent
+    MyTasksComponent,
+    HomeComponent
   ],
   providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

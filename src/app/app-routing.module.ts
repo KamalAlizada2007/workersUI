@@ -6,6 +6,15 @@ import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' }, 
+
+   {
+    path: 'home',
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] },
+    loadComponent: () =>
+      import('./components/home/home.component').then(m => m.HomeComponent)
+  },
+  
   {
     path: 'workers',
     canActivate: [AuthGuard],
@@ -44,6 +53,13 @@ const routes: Routes = [
     loadComponent: () =>
       import('./components/register/register.component').then(m => m.RegisterComponent)
   },
+
+ 
+  
+ 
+  
+
+
 
   {path: 'users', component: UsersComponent}
 ];

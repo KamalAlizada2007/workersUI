@@ -8,7 +8,7 @@
   </ng-container>
 
   <ng-container *ngIf="(userRole$ | async)?.toLowerCase() === 'worker'">
-    <a routerLink="/mytasks">Tasks</a>
+    <a routerLink="/mytasks">MyTasks</a>
   </ng-container>
 
   <button (click)="logout()">Logout</button>

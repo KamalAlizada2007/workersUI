@@ -6,7 +6,8 @@ export interface WorkTask {
   id: number;
   name: string;
   description: string;
-  workerId: number | null;  
+  workerId: number | null;
+  status?: 0 | 1 | 2 | 3;
 }
 
 @Injectable({
@@ -40,4 +41,6 @@ export class WorkTaskService {
   getTasksByWorkerCode(): Observable<WorkTask[]>{
     return this.http.get<WorkTask[]>(`${this.apiUrl}get-mytask`);
   }
+
+   
 }

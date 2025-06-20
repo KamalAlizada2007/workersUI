@@ -36,11 +36,12 @@ export class LoginComponent {
         const token = res.token;
 
         const decoded = jwtDecode<any>(token);
+        console.log('Decoded token ', decoded)
         const role = decoded[ClaimTypes.role];
         console.log(role)
 
         if (role === 'Admin') {
-          this.router.navigate(['workers']);
+          this.router.navigate(['home']);
         } else if (role === 'Worker') {
           this.router.navigate(['dashboard']);
         } else {

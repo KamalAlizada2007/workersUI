@@ -42,6 +42,8 @@ export class WorktaskComponent implements OnInit {
   loadTasks(): void {
     this.workTaskService.getWorkTasks().subscribe((data: WorkTask[]) => {
       this.allTasks = data;
+            console.log('Tasks from API:', data);
+
       this.applyFilter();
     });
   }

@@ -1,17 +1,44 @@
 <div class="header">
-    <h3>Let's do it!</h3>
+  <h3>Let's do it!</h3>
 </div>
 
 <div class="container">
-    <div *ngIf="tasks.length === 0">
+  <div *ngIf="tasks.length === 0">
     <p>There are no tasks to do.</p>
-    </div>
+  </div>
 
-    <div class="task-list">
-    <div *ngFor="let task of tasks" class="task-card">
-        <h3>{{ task.name }}</h3>
-        <p>{{ task.description }}</p>
-        <button (click)="onAction(task)">Start</button>
-    </div>
-    </div>
+  <table class="tasks-table" *ngIf="tasks.length > 0">
+    <thead>
+      <tr>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td class="task-title">{{ task.name }}</td>
+        <td class="task-desc">{{ task.description }}</td>
+        <td class="task-actions">
+          <ng-container [ngSwitch]="task.status">
+            <div *ngSwitchCase="0">
+              <button class="start" (click)="startTask(task)">Start</button>
+            </div>
+            <div *ngSwitchCase="1">
+              <button class="pause" (click)="pauseTask(task)">Pause</button>
+              <button class="complete" (click)="completeTask(task)">Complete</button>
+            </div>
+            <div *ngSwitchCase="2">
+              <button class="start" (click)="continueTask(task)">Continue</button>
+              <button class="complete" (click)="completeTask(task)">Complete</button>
+            </div>
+            <div *ngSwitchCase="3">
+              <p class="completed-msg">Completed</p>
+              <button class="start" (click)="startTask(task)">Start Again</button>
+            </div>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

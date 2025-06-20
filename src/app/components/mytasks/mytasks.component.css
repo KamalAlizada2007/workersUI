@@ -1,68 +1,122 @@
-.task-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px; /* space between cards */
-  justify-content: flex-start;
-}
-
-.task-card {
-  flex: 1 1 calc(20% - 15px); /* 5 cards per row with some gap */
-  box-sizing: border-box;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 15px 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: box-shadow 0.3s ease;
-  min-width: 180px; /* prevent cards from getting too narrow */
-  max-width: 20%;
-}
-
-.task-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-/* Keep other styles the same */
-.task-card h3 {
-  margin: 0 0 8px 0;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.task-card p {
-  margin: 0 0 12px 0;
-  color: #555;
-  font-size: 1rem;
-  line-height: 1.4;
-}
-
-.task-card button {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 8px 15px;
-  font-size: 0.9rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.task-card button:hover {
-  background-color: #0056b3;
-}
-
-p {
-  color: #999;
-  font-size: 1.2rem;
-  text-align: center;
-  margin-top: 20px;
+.container {
+  padding: 10px 50px;
 }
 
 .header {
   text-align: center;
-  font-size: 31px;
+  font-size: 28px;
+  margin: 20px 0;
 }
 
-.container {
-  margin: 5px 50px;
+/* Cədvəl */
+.tasks-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  table-layout: fixed; /* Sabit sütun genişliyi üçün */
+}
+
+.tasks-table thead {
+  background-color: #007bff;
+  color: white;
+}
+
+.tasks-table th,
+.tasks-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tasks-table thead th:nth-child(1),
+.tasks-table tbody td:nth-child(1) {
+  width: 20%; /* Task Name */
+}
+
+.tasks-table thead th:nth-child(2),
+.tasks-table tbody td:nth-child(2) {
+  width: 800px; /* Description elastik genişlikdə */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tasks-table thead th:nth-child(3),
+.tasks-table tbody td:nth-child(3) {
+  width: auto; /* Actions sütunu sabit genişlikdə */
+  white-space: nowrap;
+}
+
+/* Task adı */
+.task-title {
+  font-weight: 700;
+  color: #222;
+}
+
+/* Açıklama */
+.task-desc {
+  font-weight: 600;
+  color: #555;
+}
+
+/* Düymələr konteyneri */
+.task-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
+/* Düymələr */
+.task-actions button {
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+/* Düymə rəngləri */
+button.start {
+  background-color: #007bff;
+}
+
+button.start:hover {
+  background-color: #0056b3;
+}
+
+button.pause {
+  background-color: #ffc107;
+  color: black;
+}
+
+button.pause:hover {
+  background-color: #d39e00;
+}
+
+button.complete {
+  background-color: #28a745;
+}
+
+button.complete:hover {
+  background-color: #1e7e34;
+}
+
+/* Completed status mesajı */
+.completed-msg {
+  font-weight: 600;
+  color: #28a745;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+/* Boş task mesajı */
+.no-tasks {
+  text-align: center;
+  margin-top: 20px;
+  color: #999;
+  font-size: 1.2rem;
 }
